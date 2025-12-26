@@ -1,0 +1,41 @@
+### Variables
+@baseUrl = http://localhost:3000
+@contentType = application/json
+
+GET {{baseUrl}}
+
+### Get resources
+# @getResources
+GET {{baseUrl}}/resources
+
+### Get resources with filter
+GET {{baseUrl}}/resources?status=archived
+
+### Create new resource
+# @name createResource
+POST {{baseUrl}}/resources
+Content-Type: {{contentType}}
+
+{
+  "name": "Some resources",
+  "description": "This is a resource description",
+  "status": "active"
+}
+
+### Set the resource id
+@resourceId = {{createResource.response.body.id}}
+
+### Get task by ID
+GET {{baseUrl}}/resources/{{resourceId}}
+
+### Update task status
+PATCH {{baseUrl}}/resources/{{resourceId}}
+Content-Type: {{contentType}}
+
+{
+  "name": "Updated name",
+  "status":"archived"
+}
+
+### Delete task
+DELETE {{baseUrl}}/resources/{{resourceId}}
